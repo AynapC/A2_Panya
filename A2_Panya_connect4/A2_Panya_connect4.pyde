@@ -19,6 +19,7 @@ def setup():
 def draw():
     background(240)
     draw_board(0, 0)
+    draw_turn()
 
 ### create 2d array for game check ###
 
@@ -39,7 +40,7 @@ def create_1D_array(length):
         return []
     return [0] + create_1D_array(length - 1)
 
-### end section maybeee ###
+### end s ###
 
 ### draw borad ###
 
@@ -65,7 +66,7 @@ def draw_cell(cols, rows):
     rect(x, y, size_, size_)
     
 ### end ###
-'''
+
     ### draw coin ###
     
     if board[cols][rows] == 1:
@@ -81,12 +82,40 @@ def draw_cell(cols, rows):
 def mousePressed():
     if mouseX >= off_x and mouseX < off_x + grid_collum * size_:
         cols = int((mouseX - off_x)/ size_)
-        drop_coin(cols)
+        
+        if drop_coin(cols):
+            switch_player()
+        
     
 def drop_coin(cols):
     rows = grid_rows - 1
     while rows >= 0:
+        
         if board[cols][rows] == 0:
             board[cols][rows] = current_player
-            return
+            return True
         rows -= 1
+    return False
+
+### switch player ###
+
+def switch_player():
+    global current_player
+    if current_player == 1:
+        current_player = 2
+        
+    else:
+        current_player = 1
+        
+### draw turn ###
+def draw_turn():
+    textSize(20)
+    if current_player == 1:
+        fill(0)
+        text("Turn: Black Player", 50, 620)
+    
+    else:
+        fill(100)
+        text("Turn: White Player", 50, 620)
+        
+### hot stuff $$$$%#$
