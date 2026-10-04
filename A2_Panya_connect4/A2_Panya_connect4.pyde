@@ -8,6 +8,7 @@ off_y = 50
 current_player = 1
 game_over = False
 winner = 0
+draw_game = False
 
 board = []
 
@@ -15,7 +16,7 @@ def setup():
     size(650, 650)
     init_board()
     #print(board)
-                                                                  ### cm5 edit
+
 def draw():
     background(240)
     draw_board(0, 0)
@@ -24,7 +25,7 @@ def draw():
         
     else:
         draw_turn()
-                                                                  ### cm5 end edit
+
 ### create 2d array for game check ###
 
 def init_board():
@@ -33,6 +34,7 @@ def init_board():
     current_player = 1
     game_over = False
     winner = 0
+    draw_game = False
     
 def create_2D_array(cols, rows):
     if cols == 0:
@@ -82,10 +84,12 @@ def draw_cell(cols, rows):
         ellipse(x + size_/2, y + size_/2, 60, 60)
         
 ### drop coin ###
-                                                                  ### cm5 edit
+
 def mousePressed():
-    global game_over, winner
+    global game_over, winner, draw_game
     if game_over:
+        init_board()
+        draw_game = False
         return
 
     if mouseX >= off_x and mouseX < off_x + grid_collum * size_:
@@ -96,11 +100,14 @@ def mousePressed():
             if check_win(cols, rows):
                 game_over = True
                 winner = current_player
-        
+            
+            elif check_full():
+                game_over = True
+                draw_game = True
+                
             else:
                 switch_player()
-                                                                  ### cm5 end edit
-                                                                  ### cm5 edit
+
 def drop_coin(cols):                                              
     rows = grid_rows - 1
     while rows >= 0:
@@ -109,7 +116,7 @@ def drop_coin(cols):
             return rows
         rows -= 1
     return -1
-                                                                  ### cm5 end edit
+
 ### switch player ###
 
 def switch_player():
@@ -180,7 +187,10 @@ def check_win(cols, rows):
 ### draw win n ere ### 45t t544
 def draw_winner():
     textSize(20)
-    if winner == 1:
+    if draw_game:
+        fill(0)
+        text("Draw!", 50, 570)
+    elif winner == 1:
         fill(0)
         text("Black Win!", 50, 570)
         
@@ -189,3 +199,16 @@ def draw_winner():
         text("White Win!", 50, 570)
 ### git commit -m "add headache to my brain"
 ### 72756b206a61726e20736f706f6e
+
+### check full baord for reset board ###
+def check_full():
+    cols = 0
+    while cols < grid_collum:
+        rows = 0
+        
+        while rows < grid_rows:
+            if board[cols][rows] == 0:
+                return False
+            rows += 1
+        cols += 1
+    return True
