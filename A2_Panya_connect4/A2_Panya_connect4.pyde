@@ -10,6 +10,9 @@ game_over = False
 winner = 0
 draw_game = False
 
+black_score = 0
+white_score = 0
+
 board = []
 
 def setup():
@@ -25,11 +28,12 @@ def draw():
         
     else:
         draw_turn()
+    draw_score()
 
 ### create 2d array for game check ###
 
 def init_board():
-    global board, current_player, game_over, winner
+    global board, current_player, game_over, winner, draw_game
     board = create_2D_array(grid_collum, grid_rows)
     current_player = 1
     game_over = False
@@ -86,10 +90,10 @@ def draw_cell(cols, rows):
 ### drop coin ###
 
 def mousePressed():
-    global game_over, winner, draw_game
+    global game_over, winner, draw_game, black_score, white_score
     if game_over:
         init_board()
-        draw_game = False
+        #draw_game = False
         return
 
     if mouseX >= off_x and mouseX < off_x + grid_collum * size_:
@@ -100,6 +104,10 @@ def mousePressed():
             if check_win(cols, rows):
                 game_over = True
                 winner = current_player
+                if current_player == 1:
+                    black_score += 1
+                else:
+                    white_score += 1
             
             elif check_full():
                 game_over = True
@@ -212,3 +220,12 @@ def check_full():
             rows += 1
         cols += 1
     return True
+
+### draew scorje ###
+def draw_score():
+    textSize(20)
+    fill(0)
+    text("Black: "+ str(black_score), 50, 610)
+    
+    fill(100)
+    text("White: "+ str(white_score), 200, 610)
