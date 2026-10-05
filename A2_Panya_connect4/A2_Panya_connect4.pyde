@@ -229,3 +229,26 @@ def draw_score():
     
     fill(100)
     text("White: "+ str(white_score), 200, 610)
+    
+##$# end lawn ###
+
+### Save ###
+def save_game():
+    save_board = ""
+    cols = 0
+    while cols < grid_collum:
+        rows = 0
+        
+        while rows < grid_rows:
+            save_board = save_board + str(board[cols][rows])
+            rows += 1
+        cols += 1
+    save_data = save_board + "|" + str(current_player) + "|" + str(black_score) + "|" + str(white_score)
+    saveStrings("c4_save.txt", [save_data])
+    print("Game Saved")
+
+def keyPressed():
+    if key == 's' or key == 'S':
+        save_game()
+        
+### end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end ###    
