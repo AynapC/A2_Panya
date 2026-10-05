@@ -246,9 +246,44 @@ def save_game():
     save_data = save_board + "|" + str(current_player) + "|" + str(black_score) + "|" + str(white_score)
     saveStrings("c4_save.txt", [save_data])
     print("Game Saved")
+    
+### load game bab load save aa ###
+
+def load_game():
+    global game_over, winner, draw_game, black_score, white_score, board, current_player
+    data = loadStrings("c4_save.txt")
+    if data == None:
+        print("Can't find save")
+        return
+    data = data[0].split("|")
+    board_text = data[0]
+    current_player = int(data[1])
+    black_score = int(data[2])
+    white_score = int(data[3])
+    cols = 0
+    index = 0
+    while cols < grid_collum:
+        rows = 0
+        
+        while rows < grid_rows:
+            board[cols][rows] = int(board_text[index])
+            index += 1
+            rows += 1
+        cols += 1
+    game_over = False
+    winner = 0
+    draw_game = False
+    print("Game Loaded")
+
+## # dne # # #
+
+### gode law tum work ####$
 
 def keyPressed():
     if key == 's' or key == 'S':
         save_game()
+    
+    elif key == 'l' or key == 'L':
+        load_game()
         
 ### end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end end ###    
