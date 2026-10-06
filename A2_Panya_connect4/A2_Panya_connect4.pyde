@@ -29,6 +29,7 @@ def draw():
     else:
         draw_turn()
     draw_score()
+    draw_ui()
 
 ### create 2d array for game check ###
 
@@ -225,12 +226,22 @@ def check_full():
 def draw_score():
     textSize(20)
     fill(0)
-    text("Black: "+ str(black_score), 50, 610)
+    text("Black: "+ str(black_score), 50, 600)
     
     fill(100)
-    text("White: "+ str(white_score), 200, 610)
+    text("White: "+ str(white_score), 200, 600)
     
 ##$# end lawn ###
+
+### draw uiiiiii ###
+
+def draw_ui():
+    textSize(20)
+    fill(0)
+    text("Save Game: S", 50, 630)
+    text("Load Game: L", 200, 630)
+    
+### end ###
 
 ### Save ###
 def save_game():
